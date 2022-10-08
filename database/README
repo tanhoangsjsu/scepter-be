@@ -1,1 +1,17 @@
 Folder for backend database related stuff
+
+(1) How to Install MySQL
+------------------------
+
+https://dev.mysql.com/downloads/mysql/  ( I asm using version 8.0.18)
+
+(2) How to install MySQL Workbench
+---------------------------------------
+
+http://www.mysql.com/products/workbench  (I am using version 8.0.16) 
+
+
+(3) After the server and workbench are running:
+----------------------------------------------
+
+In Workbench, Copy/Paste the CreateDB.sql and run it, then copy/paste CreateTables.sql and run that.
