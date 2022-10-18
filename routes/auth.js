@@ -1,7 +1,12 @@
-const authController = require("../controllers/authControllers.js")
+const authController = require("../controllers/authControllers");
 
-const router = require("express").Router()
+const router = require("express").Router();
+// const { verifyToken } = require("../controllers/verifyToken");
 
-router.post("/register", authController.registerUser)
+//REGISTER
+router.post("/register", authController.registerUser);
 
+
+//LOGIN
+router.post("/login", authController.loginUser);
 module.exports = router;
