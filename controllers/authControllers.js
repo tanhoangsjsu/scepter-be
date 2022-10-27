@@ -6,42 +6,59 @@ const jwt = require("jsonwebtoken");
 const authController = {
 //REGISTER
 registerUser: async (req, res) => {
+    const { username, email, password, role} = req.body;
 try {
     const salt = await bcrypt.genSalt(10);
-    const hashed = await bcrypt.hash(req.body.password, salt);
+    const hashed = await bcrypt.hash(password, salt);
 
     //Create new user
     const newUser = await new User({
-    username: req.body.username,
-    email: req.body.email,
+    username: username,
+    email: email,
     password: hashed,
+    role: role,
     });
     //Save user to DB
     const user = await newUser.save();
-    res.status(200).json(user);
+    const accessToken = jwt.sign({
+        id: user.id,
+        username: user.username,
+    },
+    "sceptersecretkey",
+    {expiresIn:"2h"}
+    );
+    res.status(200).json({user, accessToken});
 } catch (err) {
     res.status(500).json(err);
 }
 },
 //LOGIN 
 loginUser : async(req,res)=>{
+    const { username, password} = req.body;
     try {
-        const user = await User.findOne({username: req.body.username})
+        const user = await User.findOne({username})
         if(!user){
-            res.status(404).json("Wrong username");
+            return res.status(404).json("Wrong username");
         }
         const validPassword = await bcrypt.compare(
-            req.body.password,
-            user.password,
+            password, user.password
         )
         if(!validPassword){
-            res.status(404).json("Wrong password")
+            return res.status(400).json("Wrong password")
         }
         if(user && validPassword){
-            res.status(200).json(user)
+            const accessToken = jwt.sign({
+                id: user.id,
+                username: user.username,
+            },
+            "sceptersecretkey",
+            {expiresIn:"2h"}
+            );
+            const {password, ...others} = user._doc;
+            return res.status(200).json({...others, accessToken})
         }
     } catch (error) {
-        res.status(500).json(error)
+        return res.status(500).json(error)
     }
 }
 
