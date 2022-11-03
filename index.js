@@ -43,12 +43,22 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
+//socket listener for when connection is established
 io.on('connection', (socket) => {
   console.log("Socket.IO got connected!");
-  socket.on("Login", (msg) => {
-    console.log("User logged in!");
-    socket.emit("NewUser", 'userX');
-  });
+  
+
+  //socket listener for login event
+  socket.on("Login",(msg)=>{
+    //deciding which room to put socket of the user in
+    if(msg == "student"){
+      socket.join("studentRoom")
+      console.log("Login Successful! Student joined room")
+    }
+    else {
+      socket.join("assistantRoom");
+      console.log("Login Successful! Assistant joined room")
+  }})
 });
 
 http.listen(port, () => {
