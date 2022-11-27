@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
     role:{
         type:String,
         require: true,
-    }
+    },
 },{timestamps: true})
 
 module.exports = mongoose.model("User", userSchema)

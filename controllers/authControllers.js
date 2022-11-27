@@ -60,8 +60,13 @@ loginUser : async(req,res)=>{
     } catch (error) {
         return res.status(500).json(error)
     }
-}
-
+},
+  //LOG OUT
+    logOut: async (req, res) => {
+    //Clear cookies when user logs out
+    // res.clearCookie("refreshToken");
+    res.status(200).json("Logged out successfully!");
+},
 
 };
 
