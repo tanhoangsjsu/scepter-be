@@ -1,9 +1,5 @@
-var User = require("../models/User");
+
 var Request = require("../models/Request");
-
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-
 
 const requestController = {
 

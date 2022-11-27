@@ -5,6 +5,7 @@ const cors = require("cors")
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser")
 const authRoute = require("./routes/auth")
+const reqRoute = require("./routes/request")
 
 
 const app = express();
@@ -33,6 +34,7 @@ mongoose.connect("mongodb+srv://tanhoang14:3KuADKJSIhBOzJhl@cluster0.n720fe1.mon
 
 //ROUTES 
 app.use("/v1/auth", authRoute);
+app.use("/v1/request", reqRoute);
 
 app.listen(8000,()=>{
     console.log("server is running...")
